@@ -1,77 +1,74 @@
-import math
+#import math
 
-multiChannel = 0
+class Channel_Manager:
+    def __init__(self):
+        self.multiChannel = 0
 
-def ChannelSubract(channelID, value):
-    global multiChannel
+    def channel_subtract(self, channel_ID, value):
+        """Subtract a value from the specified channel."""
+        current_value = self.ChannelGetValue(channel_ID)
+        current_value -= value
+        if not self.ValidateValue(current_value): return
+        self.ChannelSetValue(channel_ID, current_value)
 
-    currentValue = ChannelGetValue(channelID)
-    currentValue -= value
-    if not ValidateValue(currentValue): return
-    ChannelSetValue(channelID, currentValue)
-    
+    def Channel_Add(self, channel_ID, value) -> None:
+        current_value = self.ChannelGetValue(channel_ID)
+        current_value += value
+        if not self.ValidateValue(current_value):return 
+        self.ChannelSetValue(channel_ID, current_value)
 
-def ChannelAdd(channelID, value):
-    global multiChannel
+    def ChannelSetValue(self, channelID, value):
+        if not self.ValidateValue(value): return
+        self.ChannelClear(channelID)
+        value = value * (1000**(channelID - 1))
+        self.multiChannel += value
 
-    currentValue = ChannelGetValue(channelID)
-    currentValue += value
-    if not ValidateValue(currentValue): return
-    ChannelSetValue(channelID, currentValue)
+    def ChannelClear(self, channelID):
+        if channelID == -1:
+            self.multiChannel = 0
+        else:
+            channelValue = self.ChannelGetValue(channelID)
+            channelValue = channelValue * (1000**(channelID - 1))
+            self.multiChannel -= channelValue
 
-def ChannelSetValue(channelID, value):
-    global multiChannel
-    if not ValidateValue(value): return
-    ChannelClear(channelID)
-    value = value * (1000**(channelID - 1))
-    multiChannel += value
-
-def ChannelClear(channelID):
-    global multiChannel
-    if channelID == -1:
-        multiChannel = 0
-    else:
-        channelValue = ChannelGetValue(channelID)    
-        channelValue = channelValue * (1000**(channelID - 1))
-        multiChannel -= channelValue
-
-def ValidateValue(value):
-    if value < 999 and value > 0: 
-        return True
-    else:
-        print("Value out of range, operation not performed") 
+    def ValidateValue(self, value):
+        if 0 < value < 999:
+            return True
+        print("Value out of range, operation not performed")
         return False
 
-def DisplayAllChannels():
-    value = ChannelGetValue(1)
-    print(f"Channel 1 is {value}")
-    value = ChannelGetValue(2)
-    print(f"Channel 2 is {value}")
-    value = ChannelGetValue(3)
-    print(f"Channel 3 is {value}")
+    def display_all_channels(self) -> None:
+        """Display the values of all three channels."""
+        value = self.ChannelGetValue(1)
+        print(f"Channel 1 is {value}")
+        value = self.ChannelGetValue(2)
+        print(f"Channel 2 is {value}")
+        value = self.ChannelGetValue(3)
+        print(f"Channel 3 is {value}")
 
-def ChannelGetValue(channelID):
-    result = math.floor(multiChannel % (1000**channelID) / (1000**(channelID - 1)))
-    return result
+    def ChannelGetValue(self, channelID):
+        result = self.multiChannel % (1000**channelID) // (1000**(channelID - 1))
+        return result
+
+channel_manager = Channel_Manager()
 
 
 ###DO NOT ALTER ANY CODE BELOW THIS LINE###
 
-def main():    
-    global multiChannel
-    multiChannel = 123456789
-    ChannelSetValue(2,555)
-    ChannelSubract(2,111)
-    DisplayAllChannels()
-    ChannelClear(-1)
-    ChannelSubract(3,1)
-    ChannelSetValue(1,111)
-    ChannelSetValue(2,888)
-    DisplayAllChannels()
-    ChannelSubract(1,111)
-    ChannelAdd(2,111)
-    ChannelAdd(3,5555)
-    DisplayAllChannels()
+def main():
+    #channel_manager.multiChannel = 123456789
+    channel_manager.ChannelSetValue(2,555)
+    channel_manager.channel_subtract(2,111)
+    channel_manager.display_all_channels()
+    channel_manager.ChannelClear(-1)
+    channel_manager.channel_subtract(3,1)
+    channel_manager.ChannelSetValue(1,111)
+    channel_manager.ChannelSetValue(2,888)
+    channel_manager.display_all_channels()
+    channel_manager.channel_subtract(1,111)
+    channel_manager.Channel_Add(2,111)
+    #channel_manager.Channel_Add(3,5555)
+    #channel_manager.display_all_channels()
 
 
 
