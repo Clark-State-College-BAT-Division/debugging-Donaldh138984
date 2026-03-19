@@ -1,17 +1,17 @@
 The program in sample2.py has two errors in it, both of which are common ones you might encounter. Also, the lack
 of comments is intentional. Again, a common situation you'll encounter. You'll know the intent of the program and
-what the correct output is, but there will be either mimimal or no comments in the code itself.
+what the correct output is, but there will be either minimal or no comments in the code itself.
 
-At the end of this file is the output you should get when you run the program. I would strongly recomend using
+At the end of this file is the output you should get when you run the program. I would strongly recommend using
 breakpoints to find the errors, but however you fix the errors is up to you. The one restriction you have is that you
 are not allowed to alter main() in any way.
 
 The general idea behind the program is to encode three different numbers with a range of 0 to 999 in a single
 normal integer. So we're using the hundreds, thousands, and millions places to encode three numbers. Channel 1
 is the hundreds, channel 2 is the thousands, and channel 3 is the millions. So if channel 1 is encoded to 111,
-channel 2 encoded to 222, and channel three encouded to 333, the resulting integer would be 333222111.
+channel 2 encoded to 222, and channel three encoded to 333, the resulting integer would be 333222111.
 
-Yes, in most situations you don't need to do seomthing like this. But there are situations, especially in 
+Yes, in most situations you don't need to do something like this. But there are situations, especially in
 embedded programming, where you don't have unlimited variables.
 
 Correct Output:
